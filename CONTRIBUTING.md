@@ -2,12 +2,14 @@
 
 ## 仓库结构
 
-当前仓库建议保持轻量，只拆出完整代码目录：
+当前仓库建议保持轻量，题解正文保留在根 `README.md`，较长的专题学习笔记放到 `docs/`，完整代码放到 `solutions/`：
 
 ```text
 LeetGPU-Guidebook/
 |-- README.md
 |-- CONTRIBUTING.md
+|-- docs/
+|   `-- cuda-best-practices/
 `-- solutions/
     |-- normalization/
     |-- quantization/
@@ -18,6 +20,7 @@ LeetGPU-Guidebook/
 推荐继续沿用这个形式：
 
 - `README.md` 只放总说明、索引、题解正文，以及必要的核心代码片段
+- `docs/` 放专题学习笔记、实验计划、长文档
 - `CONTRIBUTING.md` 放仓库结构、模板、收录规范
 - `solutions/` 放 README 里不适合完整展开的题目代码
 - 同一题的多个版本放在同一节内，避免散落

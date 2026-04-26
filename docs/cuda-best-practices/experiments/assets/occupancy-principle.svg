@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">Occupancy Sweep: What Actually Changes</text>
+<text class="body" x="44" y="78">occupancy 是单 SM 同时驻留的活跃 warp 比例；真正决定它的常见约束是 registers、shared memory、block size。</text>
+
+<rect class="panel" x="40" y="110" width="620" height="400"/>
+<text class="label" x="74" y="150">Resource limits</text>
+<rect class="gpu" x="100" y="220" width="120" height="70" rx="12" ry="12"/><text class="body" x="128" y="260">registers</text>
+<rect class="warn" x="280" y="220" width="120" height="70" rx="12" ry="12"/><text class="body" x="317" y="260">shared</text>
+<rect class="accent" x="460" y="220" width="120" height="70" rx="12" ry="12"/><text class="body" x="495" y="260">block size</text>
+<line class="arrow" x1="220" y1="255" x2="280" y2="255"/><line class="arrow" x1="400" y1="255" x2="460" y2="255"/>
+<text class="small" x="128" y="352">任何一个资源先触顶，active blocks / SM 就先降。</text>
+
+<rect class="panel" x="700" y="110" width="660" height="400"/>
+<text class="label" x="734" y="150">Latency hiding</text>
+<rect class="hot" x="760" y="220" width="160" height="70" rx="12" ry="12"/><text class="body" x="800" y="260">few warps</text>
+<rect class="gpu" x="1040" y="220" width="220" height="70" rx="12" ry="12"/><text class="body" x="1093" y="260">many ready warps</text>
+<line class="arrow" x1="920" y1="255" x2="1040" y2="255"/>
+<text class="small" x="804" y="352">occupancy 高不等于一定更快，但太低时更难靠切换 warp 隐藏延迟。</text>
+
+</svg>

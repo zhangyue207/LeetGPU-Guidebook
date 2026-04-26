@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">Pinned vs Pageable: Transfer Path</text>
+<text class="body" x="44" y="78">pageable 内存往往要先拷到临时 pinned staging buffer；pinned 可以直接交给 DMA。</text>
+
+<rect class="panel" x="40" y="110" width="630" height="400"/>
+<text class="label" x="70" y="150">Pageable</text>
+<rect class="cpu" x="80" y="210" width="170" height="64" rx="12" ry="12"/>
+<text class="body" x="115" y="248">host pageable</text>
+<rect class="warn" x="300" y="210" width="190" height="64" rx="12" ry="12"/>
+<text class="body" x="326" y="248">driver staging pinned</text>
+<rect class="gpu" x="540" y="210" width="90" height="64" rx="12" ry="12"/>
+<text class="body" x="562" y="248">GPU</text>
+<line class="arrow" x1="250" y1="242" x2="300" y2="242"/>
+<line class="arrow" x1="490" y1="242" x2="540" y2="242"/>
+<text class="small" x="146" y="320">多了一次 host-side staging copy</text>
+<text class="small" x="168" y="344">小包传输时成本尤其显眼</text>
+
+<rect class="panel" x="700" y="110" width="660" height="400"/>
+<text class="label" x="730" y="150">Pinned</text>
+<rect class="accent" x="760" y="210" width="180" height="64" rx="12" ry="12"/>
+<text class="body" x="809" y="248">host pinned</text>
+<rect class="gpu" x="1110" y="210" width="120" height="64" rx="12" ry="12"/>
+<text class="body" x="1148" y="248">GPU</text>
+<line class="arrow" x1="940" y1="242" x2="1110" y2="242"/>
+<text class="body" x="986" y="228">DMA</text>
+<text class="small" x="806" y="320">直接走 DMA，路径更短</text>
+<text class="small" x="818" y="344">更容易接近链路带宽上限</text>
+
+</svg>

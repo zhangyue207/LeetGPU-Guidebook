@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 20; ry: 20; }
+      .title { font: 700 34px "DejaVu Sans", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 19px "DejaVu Sans", sans-serif; fill: #475569; }
+      .label { font: 700 21px "DejaVu Sans", sans-serif; fill: #1e293b; }
+      .body { font: 400 18px "DejaVu Sans", sans-serif; fill: #334155; }
+      .small { font: 400 15px "DejaVu Sans", sans-serif; fill: #64748b; }
+      .tick { stroke: #cbd5e1; stroke-width: 1.5; }
+      .issue { fill: #2563eb; }
+      .wait { fill: #e2e8f0; }
+      .issue2 { fill: #0f766e; }
+      .line { stroke: #64748b; stroke-width: 2; }
+      .note { fill: #ecfeff; stroke: #67e8f9; stroke-width: 1.5; rx: 14; ry: 14; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="820"/>
+  <text class="title" x="56" y="60">Scheduler / ILP 直观图</text>
+  <text class="subtitle" x="56" y="94">同样都是一个 warp、每轮 4 次 FMA。差别只在于这 4 次 FMA 是“串成一条依赖链”还是“4 条独立链可交错发射”。</text>
+
+  <rect class="panel" x="40" y="130" width="1320" height="630"/>
+
+  <text class="label" x="78" y="186">dep_chain</text>
+  <text class="body" x="78" y="214">每条新 FMA 都依赖上一条结果。warp scheduler 即使想继续发射，也经常要等前一条返回。</text>
+
+  <g transform="translate(78,250)">
+    <text class="small" x="16" y="24">cycle</text>
+    <line class="line" x1="90" y1="18" x2="1130" y2="18"/>
+    <line class="line" x1="90" y1="110" x2="1130" y2="110"/>
+    <text class="small" x="16" y="116">warp 0</text>
+    <g>
+      <line class="tick" x1="110" y1="0" x2="110" y2="128"/><text class="small" x="102" y="150">0</text>
+      <line class="tick" x1="190" y1="0" x2="190" y2="128"/><text class="small" x="182" y="150">1</text>
+      <line class="tick" x1="270" y1="0" x2="270" y2="128"/><text class="small" x="262" y="150">2</text>
+      <line class="tick" x1="350" y1="0" x2="350" y2="128"/><text class="small" x="342" y="150">3</text>
+      <line class="tick" x1="430" y1="0" x2="430" y2="128"/><text class="small" x="422" y="150">4</text>
+      <line class="tick" x1="510" y1="0" x2="510" y2="128"/><text class="small" x="502" y="150">5</text>
+      <line class="tick" x1="590" y1="0" x2="590" y2="128"/><text class="small" x="582" y="150">6</text>
+      <line class="tick" x1="670" y1="0" x2="670" y2="128"/><text class="small" x="662" y="150">7</text>
+      <line class="tick" x1="750" y1="0" x2="750" y2="128"/><text class="small" x="742" y="150">8</text>
+      <line class="tick" x1="830" y1="0" x2="830" y2="128"/><text class="small" x="822" y="150">9</text>
+      <line class="tick" x1="910" y1="0" x2="910" y2="128"/><text class="small" x="898" y="150">10</text>
+      <line class="tick" x1="990" y1="0" x2="990" y2="128"/><text class="small" x="978" y="150">11</text>
+    </g>
+    <rect class="issue" x="118" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="136" y="69" fill="#ffffff">FMA0</text>
+    <rect class="wait" x="198" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="214" y="69">wait</text>
+    <rect class="wait" x="278" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="294" y="69">wait</text>
+    <rect class="issue" x="358" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="376" y="69" fill="#ffffff">FMA1</text>
+    <rect class="wait" x="438" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="454" y="69">wait</text>
+    <rect class="wait" x="518" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="534" y="69">wait</text>
+    <rect class="issue" x="598" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="616" y="69" fill="#ffffff">FMA2</text>
+    <rect class="wait" x="678" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="694" y="69">wait</text>
+    <rect class="wait" x="758" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="774" y="69">wait</text>
+    <rect class="issue" x="838" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="856" y="69" fill="#ffffff">FMA3</text>
+    <rect class="wait" x="918" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="934" y="69">wait</text>
+    <rect class="wait" x="998" y="40" width="64" height="48" rx="10" ry="10"/><text class="small" x="1014" y="69">wait</text>
+  </g>
+
+  <g transform="translate(78,440)">
+    <text class="label" x="0" y="0">ilp4</text>
+    <text class="body" x="0" y="28">单线程里有 4 条互不依赖的累计链。即使某条链还没 ready，同一个 warp 里仍然有别的 FMA 可以发射。</text>
+    <text class="small" x="16" y="92">cycle</text>
+    <line class="line" x1="90" y1="86" x2="1130" y2="86"/>
+    <line class="line" x1="90" y1="178" x2="1130" y2="178"/>
+    <text class="small" x="16" y="184">warp 0</text>
+    <g>
+      <line class="tick" x1="110" y1="68" x2="110" y2="196"/><text class="small" x="102" y="218">0</text>
+      <line class="tick" x1="190" y1="68" x2="190" y2="196"/><text class="small" x="182" y="218">1</text>
+      <line class="tick" x1="270" y1="68" x2="270" y2="196"/><text class="small" x="262" y="218">2</text>
+      <line class="tick" x1="350" y1="68" x2="350" y2="196"/><text class="small" x="342" y="218">3</text>
+      <line class="tick" x1="430" y1="68" x2="430" y2="196"/><text class="small" x="422" y="218">4</text>
+      <line class="tick" x1="510" y1="68" x2="510" y2="196"/><text class="small" x="502" y="218">5</text>
+      <line class="tick" x1="590" y1="68" x2="590" y2="196"/><text class="small" x="582" y="218">6</text>
+      <line class="tick" x1="670" y1="68" x2="670" y2="196"/><text class="small" x="662" y="218">7</text>
+      <line class="tick" x1="750" y1="68" x2="750" y2="196"/><text class="small" x="742" y="218">8</text>
+      <line class="tick" x1="830" y1="68" x2="830" y2="196"/><text class="small" x="822" y="218">9</text>
+      <line class="tick" x1="910" y1="68" x2="910" y2="196"/><text class="small" x="898" y="218">10</text>
+      <line class="tick" x1="990" y1="68" x2="990" y2="196"/><text class="small" x="978" y="218">11</text>
+    </g>
+    <rect class="issue2" x="118" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="136" y="137" fill="#ffffff">x0</text>
+    <rect class="issue2" x="198" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="216" y="137" fill="#ffffff">x1</text>
+    <rect class="issue2" x="278" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="296" y="137" fill="#ffffff">x2</text>
+    <rect class="issue2" x="358" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="376" y="137" fill="#ffffff">x3</text>
+    <rect class="issue2" x="438" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="456" y="137" fill="#ffffff">x0</text>
+    <rect class="issue2" x="518" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="536" y="137" fill="#ffffff">x1</text>
+    <rect class="issue2" x="598" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="616" y="137" fill="#ffffff">x2</text>
+    <rect class="issue2" x="678" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="696" y="137" fill="#ffffff">x3</text>
+    <rect class="issue2" x="758" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="776" y="137" fill="#ffffff">x0</text>
+    <rect class="issue2" x="838" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="856" y="137" fill="#ffffff">x1</text>
+    <rect class="issue2" x="918" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="936" y="137" fill="#ffffff">x2</text>
+    <rect class="issue2" x="998" y="108" width="64" height="48" rx="10" ry="10"/><text class="small" x="1016" y="137" fill="#ffffff">x3</text>
+  </g>
+
+  <rect class="note" x="78" y="682" width="1240" height="58"/>
+  <text class="body" x="96" y="706">当前实验里，`dep_chain` 0KB 是 `0.996576 ms`，`ilp4` 0KB 是 `0.492160 ms`，约快 `2.02x`。</text>
+  <text class="body" x="96" y="728">occupancy 降到 `0.5` 以后，`ilp4` 仍有约 `1.88x` 优势，因为 scheduler 手里可立刻发射的 ready 指令更多。</text>
+</svg>

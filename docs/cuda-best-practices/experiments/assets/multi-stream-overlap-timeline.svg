@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">Multi Stream Overlap: Serial vs Overlapped</text>
+<text class="body" x="44" y="78">单 stream 把 H2D / kernel / D2H 串起来；多 stream 把不同 chunk 错峰排队，copy 与 compute 可重叠。</text>
+
+<rect class="panel" x="40" y="110" width="630" height="400"/>
+<text class="label" x="76" y="150">Single stream</text>
+<line class="line" x1="110" y1="230" x2="610" y2="230"/>
+<rect class="cpu" x="130" y="198" width="120" height="64" rx="12" ry="12"/><text class="body" x="170" y="236">H2D</text>
+<rect class="gpu" x="260" y="198" width="150" height="64" rx="12" ry="12"/><text class="body" x="312" y="236">kernel</text>
+<rect class="warn" x="420" y="198" width="120" height="64" rx="12" ry="12"/><text class="body" x="460" y="236">D2H</text>
+<text class="small" x="168" y="318">chunk0 全串行</text>
+<text class="small" x="170" y="342">资源利用有空洞</text>
+
+<rect class="panel" x="700" y="110" width="660" height="400"/>
+<text class="label" x="736" y="150">Four streams</text>
+<text class="small" x="736" y="184">stream0</text><line class="line" x1="820" y1="180" x2="1310" y2="180"/>
+<text class="small" x="736" y="234">stream1</text><line class="line" x1="820" y1="230" x2="1310" y2="230"/>
+<text class="small" x="736" y="284">stream2</text><line class="line" x1="820" y1="280" x2="1310" y2="280"/>
+<text class="small" x="736" y="334">stream3</text><line class="line" x1="820" y1="330" x2="1310" y2="330"/>
+<rect class="cpu" x="840" y="150" width="90" height="40" rx="10" ry="10"/><rect class="gpu" x="930" y="150" width="120" height="40" rx="10" ry="10"/><rect class="warn" x="1050" y="150" width="90" height="40" rx="10" ry="10"/>
+<rect class="cpu" x="900" y="200" width="90" height="40" rx="10" ry="10"/><rect class="gpu" x="990" y="200" width="120" height="40" rx="10" ry="10"/><rect class="warn" x="1110" y="200" width="90" height="40" rx="10" ry="10"/>
+<rect class="cpu" x="960" y="250" width="90" height="40" rx="10" ry="10"/><rect class="gpu" x="1050" y="250" width="120" height="40" rx="10" ry="10"/><rect class="warn" x="1170" y="250" width="90" height="40" rx="10" ry="10"/>
+<rect class="cpu" x="1020" y="300" width="90" height="40" rx="10" ry="10"/><rect class="gpu" x="1110" y="300" width="120" height="40" rx="10" ry="10"/><rect class="warn" x="1230" y="300" width="90" height="40" rx="10" ry="10"/>
+<text class="small" x="910" y="388">不同 chunk 在不同 stream 上错峰，copy 与 compute 可以并行占用不同硬件队列。</text>
+
+</svg>

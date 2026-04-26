@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 20; ry: 20; }
+      .title { font: 700 34px "DejaVu Sans", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 19px "DejaVu Sans", sans-serif; fill: #475569; }
+      .label { font: 700 21px "DejaVu Sans", sans-serif; fill: #1e293b; }
+      .body { font: 400 18px "DejaVu Sans", sans-serif; fill: #334155; }
+      .small { font: 400 15px "DejaVu Sans", sans-serif; fill: #64748b; }
+      .tick { stroke: #cbd5e1; stroke-width: 1.5; }
+      .warp { fill: #2563eb; }
+      .warp2 { fill: #0f766e; }
+      .warp3 { fill: #d97706; }
+      .wait { fill: #e2e8f0; }
+      .issue { fill: #dc2626; }
+      .outline { stroke: #64748b; stroke-width: 2; fill: none; }
+      .note { fill: #fff7ed; stroke: #fdba74; stroke-width: 1.5; rx: 14; ry: 14; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="860"/>
+  <text class="title" x="56" y="60">Occupancy 和 Scheduler 的关系</text>
+  <text class="subtitle" x="56" y="94">这张图不画单个 warp 内部分支，而是画 scheduler 手里“有多少 warp 可切换”。occupancy 越低，单 warp 自己提供 ILP 的价值越高。</text>
+
+  <rect class="panel" x="40" y="130" width="1320" height="680"/>
+
+  <text class="label" x="80" y="184">occupancy = 1.0，scheduler 手里 warp 多</text>
+  <text class="body" x="80" y="212">当 warp0 卡在依赖等待上时，scheduler 往往还能切去 warp1 / warp2，所以 dep_chain 的空泡能被别的 warp 部分遮住。</text>
+
+  <g transform="translate(80,250)">
+    <text class="small" x="30" y="26">warp0</text>
+    <text class="small" x="30" y="86">warp1</text>
+    <text class="small" x="30" y="146">warp2</text>
+    <line class="outline" x1="100" y1="20" x2="1160" y2="20"/>
+    <line class="outline" x1="100" y1="164" x2="1160" y2="164"/>
+    <g>
+      <line class="tick" x1="120" y1="0" x2="120" y2="180"/><text class="small" x="112" y="200">0</text>
+      <line class="tick" x1="210" y1="0" x2="210" y2="180"/><text class="small" x="202" y="200">1</text>
+      <line class="tick" x1="300" y1="0" x2="300" y2="180"/><text class="small" x="292" y="200">2</text>
+      <line class="tick" x1="390" y1="0" x2="390" y2="180"/><text class="small" x="382" y="200">3</text>
+      <line class="tick" x1="480" y1="0" x2="480" y2="180"/><text class="small" x="472" y="200">4</text>
+      <line class="tick" x1="570" y1="0" x2="570" y2="180"/><text class="small" x="562" y="200">5</text>
+      <line class="tick" x1="660" y1="0" x2="660" y2="180"/><text class="small" x="652" y="200">6</text>
+      <line class="tick" x1="750" y1="0" x2="750" y2="180"/><text class="small" x="742" y="200">7</text>
+      <line class="tick" x1="840" y1="0" x2="840" y2="180"/><text class="small" x="832" y="200">8</text>
+      <line class="tick" x1="930" y1="0" x2="930" y2="180"/><text class="small" x="922" y="200">9</text>
+    </g>
+    <rect class="issue" x="128" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="147" y="27" fill="#ffffff">w0 FMA</text>
+    <rect class="wait" x="218" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="237" y="27">wait</text>
+    <rect class="wait" x="308" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="327" y="27">wait</text>
+    <rect class="issue" x="398" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="417" y="27" fill="#ffffff">w0 FMA</text>
+
+    <rect class="warp" x="218" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="237" y="87" fill="#ffffff">w1 FMA</text>
+    <rect class="wait" x="308" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="327" y="87">wait</text>
+    <rect class="warp" x="488" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="507" y="87" fill="#ffffff">w1 FMA</text>
+
+    <rect class="warp2" x="308" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="327" y="147" fill="#ffffff">w2 FMA</text>
+    <rect class="warp2" x="578" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="597" y="147" fill="#ffffff">w2 FMA</text>
+  </g>
+
+  <text class="label" x="80" y="504">occupancy = 0.5，scheduler 手里 warp 少</text>
+  <text class="body" x="80" y="532">当可驻留 warp 数减半时，dep_chain 的等待更难被别人填满；这时如果一个 warp 自己就有 `ilp4`，scheduler 更容易持续找到 ready 指令。</text>
+
+  <g transform="translate(80,570)">
+    <text class="small" x="30" y="26">warp0 dep_chain</text>
+    <text class="small" x="30" y="86">warp1 dep_chain</text>
+    <text class="small" x="30" y="146">warp0 ilp4</text>
+    <line class="outline" x1="160" y1="20" x2="1160" y2="20"/>
+    <line class="outline" x1="160" y1="164" x2="1160" y2="164"/>
+    <g>
+      <line class="tick" x1="180" y1="0" x2="180" y2="180"/><text class="small" x="172" y="200">0</text>
+      <line class="tick" x1="270" y1="0" x2="270" y2="180"/><text class="small" x="262" y="200">1</text>
+      <line class="tick" x1="360" y1="0" x2="360" y2="180"/><text class="small" x="352" y="200">2</text>
+      <line class="tick" x1="450" y1="0" x2="450" y2="180"/><text class="small" x="442" y="200">3</text>
+      <line class="tick" x1="540" y1="0" x2="540" y2="180"/><text class="small" x="532" y="200">4</text>
+      <line class="tick" x1="630" y1="0" x2="630" y2="180"/><text class="small" x="622" y="200">5</text>
+      <line class="tick" x1="720" y1="0" x2="720" y2="180"/><text class="small" x="712" y="200">6</text>
+      <line class="tick" x1="810" y1="0" x2="810" y2="180"/><text class="small" x="802" y="200">7</text>
+      <line class="tick" x1="900" y1="0" x2="900" y2="180"/><text class="small" x="892" y="200">8</text>
+    </g>
+
+    <rect class="issue" x="188" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="207" y="27" fill="#ffffff">w0 FMA</text>
+    <rect class="wait" x="278" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="297" y="27">wait</text>
+    <rect class="wait" x="368" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="387" y="27">wait</text>
+    <rect class="issue" x="458" y="6" width="70" height="32" rx="8" ry="8"/><text class="small" x="477" y="27" fill="#ffffff">w0 FMA</text>
+
+    <rect class="warp3" x="278" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="297" y="87" fill="#ffffff">w1 FMA</text>
+    <rect class="wait" x="368" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="387" y="87">wait</text>
+    <rect class="wait" x="548" y="66" width="70" height="32" rx="8" ry="8"/><text class="small" x="567" y="87">wait</text>
+
+    <rect class="warp2" x="188" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="211" y="147" fill="#ffffff">x0</text>
+    <rect class="warp2" x="278" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="301" y="147" fill="#ffffff">x1</text>
+    <rect class="warp2" x="368" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="391" y="147" fill="#ffffff">x2</text>
+    <rect class="warp2" x="458" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="481" y="147" fill="#ffffff">x3</text>
+    <rect class="warp2" x="548" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="571" y="147" fill="#ffffff">x0</text>
+    <rect class="warp2" x="638" y="126" width="70" height="32" rx="8" ry="8"/><text class="small" x="661" y="147" fill="#ffffff">x1</text>
+  </g>
+
+  <rect class="note" x="80" y="756" width="1240" height="44"/>
+  <text class="body" x="96" y="778">所以 `SIMT` 负责“一个 warp 怎么执行”，`occupancy` 影响“scheduler 有多少 warp 可切换”，</text>
+  <text class="body" x="96" y="798">`ILP` 影响“单个 warp 自己有没有足够多的 ready 指令”。这三件事要分开看。</text>
+</svg>

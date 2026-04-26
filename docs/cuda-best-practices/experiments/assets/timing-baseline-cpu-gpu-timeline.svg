@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">Timing Baseline: CPU/GPU Timeline</text>
+<text class="body" x="44" y="78">host_submit 只量 CPU 提交；kernel_ms 只量 GPU 执行；end_to_end 覆盖调用方真正等待完成的时间。</text>
+
+<rect class="panel" x="40" y="110" width="1320" height="400"/>
+<text class="label" x="88" y="180">CPU</text>
+<line class="line" x1="180" y1="170" x2="1260" y2="170"/>
+<rect class="cpu" x="300" y="142" width="210" height="56" rx="12" ry="12"/>
+<text class="body" x="328" y="176">record start + launch</text>
+<rect class="warn" x="890" y="142" width="220" height="56" rx="12" ry="12"/>
+<text class="body" x="930" y="176">cudaDeviceSynchronize</text>
+
+<text class="label" x="84" y="330">GPU</text>
+<line class="line" x1="180" y1="320" x2="1260" y2="320"/>
+<rect class="gpu" x="470" y="292" width="380" height="56" rx="12" ry="12"/>
+<text class="body" x="590" y="326">kernel execution</text>
+<line class="dash" x1="470" y1="212" x2="470" y2="376"/>
+<line class="dash" x1="850" y1="212" x2="850" y2="376"/>
+
+<line class="arrow" x1="300" y1="108" x2="510" y2="108"/>
+<text class="body" x="332" y="96">host_submit_ms</text>
+
+<line class="arrow" x1="470" y1="392" x2="850" y2="392"/>
+<text class="body" x="602" y="422">kernel_ms</text>
+
+<line class="arrow" x1="300" y1="470" x2="1110" y2="470"/>
+<text class="body" x="640" y="500">end_to_end_ms</text>
+
+<text class="small" x="270" y="236">CPU 很快返回，GPU 之后才真正开始跑 kernel。</text>
+<text class="small" x="878" y="378">同步等待把“提交”与“GPU 实际完成”连接起来。</text>
+
+</svg>

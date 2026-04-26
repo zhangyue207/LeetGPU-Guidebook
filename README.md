@@ -4,6 +4,11 @@
 
 按题目记录 CUDA 解法、优化思路和部分完整实现。
 
+## CUDA Best Practices
+
+- [章节笔记](docs/cuda-best-practices/README.md)
+- [实验文档](docs/cuda-best-practices/experiments/README.md)
+
 ## 索引
 
 | 简单题 | 中等题 | 困难题 |

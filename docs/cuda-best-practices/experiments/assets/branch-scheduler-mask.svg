@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 20; ry: 20; }
+      .title { font: 700 34px "DejaVu Sans", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 19px "DejaVu Sans", sans-serif; fill: #475569; }
+      .label { font: 700 20px "DejaVu Sans", sans-serif; fill: #1e293b; }
+      .body { font: 400 18px "DejaVu Sans", sans-serif; fill: #334155; }
+      .small { font: 400 15px "DejaVu Sans", sans-serif; fill: #64748b; }
+      .lane { stroke: #94a3b8; stroke-width: 1.5; rx: 8; ry: 8; }
+      .active { fill: #0f766e; }
+      .masked { fill: #e2e8f0; }
+      .other { fill: #dc2626; }
+      .arrow { stroke: #475569; stroke-width: 2.5; marker-end: url(#arrow); fill: none; }
+      .maskbox { fill: #eff6ff; stroke: #93c5fd; stroke-width: 1.5; rx: 10; ry: 10; }
+      .note { fill: #fff7ed; stroke: #fdba74; stroke-width: 1.5; rx: 14; ry: 14; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="760"/>
+  <text class="title" x="56" y="60">Branch / Scheduler: active mask 直观图</text>
+  <text class="subtitle" x="56" y="94">按 CUDA Programming Guide Figure 7 的思路看分支分歧：前端发射的是“一条 warp 指令 + 一个 active mask”。</text>
+
+  <rect class="panel" x="40" y="130" width="1320" height="580"/>
+
+  <text class="label" x="78" y="182">1. uniform_true</text>
+  <text class="body" x="78" y="210">32 个 lane 都在同一条控制流上，一条指令同时服务整 warp。</text>
+
+  <g transform="translate(78,230)">
+    <text class="small" x="0" y="-12">warp issue: IF body</text>
+    <rect class="maskbox" x="0" y="116" width="530" height="46"/>
+    <text class="body" x="16" y="145">active mask = 11111111111111111111111111111111</text>
+    <g>
+      <rect class="lane active" x="0" y="0" width="32" height="40"/><text class="small" x="10" y="25" fill="#ffffff">0</text>
+      <rect class="lane active" x="36" y="0" width="32" height="40"/><text class="small" x="46" y="25" fill="#ffffff">1</text>
+      <rect class="lane active" x="72" y="0" width="32" height="40"/><text class="small" x="82" y="25" fill="#ffffff">2</text>
+      <rect class="lane active" x="108" y="0" width="32" height="40"/><text class="small" x="118" y="25" fill="#ffffff">3</text>
+      <rect class="lane active" x="144" y="0" width="32" height="40"/><text class="small" x="154" y="25" fill="#ffffff">4</text>
+      <rect class="lane active" x="180" y="0" width="32" height="40"/><text class="small" x="190" y="25" fill="#ffffff">5</text>
+      <rect class="lane active" x="216" y="0" width="32" height="40"/><text class="small" x="226" y="25" fill="#ffffff">6</text>
+      <rect class="lane active" x="252" y="0" width="32" height="40"/><text class="small" x="262" y="25" fill="#ffffff">7</text>
+      <rect class="lane active" x="288" y="0" width="32" height="40"/><text class="small" x="298" y="25" fill="#ffffff">8</text>
+      <rect class="lane active" x="324" y="0" width="32" height="40"/><text class="small" x="331" y="25" fill="#ffffff">9</text>
+      <rect class="lane active" x="360" y="0" width="32" height="40"/><text class="small" x="365" y="25" fill="#ffffff">10</text>
+      <rect class="lane active" x="396" y="0" width="32" height="40"/><text class="small" x="401" y="25" fill="#ffffff">11</text>
+      <rect class="lane active" x="432" y="0" width="32" height="40"/><text class="small" x="437" y="25" fill="#ffffff">12</text>
+      <rect class="lane active" x="468" y="0" width="32" height="40"/><text class="small" x="473" y="25" fill="#ffffff">13</text>
+      <rect class="lane active" x="504" y="0" width="32" height="40"/><text class="small" x="509" y="25" fill="#ffffff">14</text>
+      <rect class="lane active" x="540" y="0" width="32" height="40"/><text class="small" x="545" y="25" fill="#ffffff">15</text>
+      <rect class="lane active" x="0" y="52" width="32" height="40"/><text class="small" x="5" y="77" fill="#ffffff">16</text>
+      <rect class="lane active" x="36" y="52" width="32" height="40"/><text class="small" x="41" y="77" fill="#ffffff">17</text>
+      <rect class="lane active" x="72" y="52" width="32" height="40"/><text class="small" x="77" y="77" fill="#ffffff">18</text>
+      <rect class="lane active" x="108" y="52" width="32" height="40"/><text class="small" x="113" y="77" fill="#ffffff">19</text>
+      <rect class="lane active" x="144" y="52" width="32" height="40"/><text class="small" x="149" y="77" fill="#ffffff">20</text>
+      <rect class="lane active" x="180" y="52" width="32" height="40"/><text class="small" x="185" y="77" fill="#ffffff">21</text>
+      <rect class="lane active" x="216" y="52" width="32" height="40"/><text class="small" x="221" y="77" fill="#ffffff">22</text>
+      <rect class="lane active" x="252" y="52" width="32" height="40"/><text class="small" x="257" y="77" fill="#ffffff">23</text>
+      <rect class="lane active" x="288" y="52" width="32" height="40"/><text class="small" x="293" y="77" fill="#ffffff">24</text>
+      <rect class="lane active" x="324" y="52" width="32" height="40"/><text class="small" x="329" y="77" fill="#ffffff">25</text>
+      <rect class="lane active" x="360" y="52" width="32" height="40"/><text class="small" x="365" y="77" fill="#ffffff">26</text>
+      <rect class="lane active" x="396" y="52" width="32" height="40"/><text class="small" x="401" y="77" fill="#ffffff">27</text>
+      <rect class="lane active" x="432" y="52" width="32" height="40"/><text class="small" x="437" y="77" fill="#ffffff">28</text>
+      <rect class="lane active" x="468" y="52" width="32" height="40"/><text class="small" x="473" y="77" fill="#ffffff">29</text>
+      <rect class="lane active" x="504" y="52" width="32" height="40"/><text class="small" x="509" y="77" fill="#ffffff">30</text>
+      <rect class="lane active" x="540" y="52" width="32" height="40"/><text class="small" x="545" y="77" fill="#ffffff">31</text>
+    </g>
+  </g>
+
+  <text class="label" x="760" y="182">2. checkerboard / random_50</text>
+  <text class="body" x="760" y="210">同一个 warp 内同时存在 true / false 两条路径，硬件要分两次发射，每次只带一半左右的 active lane。</text>
+
+  <g transform="translate(760,230)">
+    <text class="small" x="0" y="-12">first issue: IF body</text>
+    <g>
+      <rect class="lane active" x="0" y="0" width="32" height="40"/><rect class="lane masked" x="36" y="0" width="32" height="40"/>
+      <rect class="lane active" x="72" y="0" width="32" height="40"/><rect class="lane masked" x="108" y="0" width="32" height="40"/>
+      <rect class="lane active" x="144" y="0" width="32" height="40"/><rect class="lane masked" x="180" y="0" width="32" height="40"/>
+      <rect class="lane active" x="216" y="0" width="32" height="40"/><rect class="lane masked" x="252" y="0" width="32" height="40"/>
+      <rect class="lane active" x="288" y="0" width="32" height="40"/><rect class="lane masked" x="324" y="0" width="32" height="40"/>
+      <rect class="lane active" x="360" y="0" width="32" height="40"/><rect class="lane masked" x="396" y="0" width="32" height="40"/>
+      <rect class="lane active" x="432" y="0" width="32" height="40"/><rect class="lane masked" x="468" y="0" width="32" height="40"/>
+      <rect class="lane active" x="504" y="0" width="32" height="40"/><rect class="lane masked" x="540" y="0" width="32" height="40"/>
+      <rect class="lane active" x="0" y="52" width="32" height="40"/><rect class="lane masked" x="36" y="52" width="32" height="40"/>
+      <rect class="lane active" x="72" y="52" width="32" height="40"/><rect class="lane masked" x="108" y="52" width="32" height="40"/>
+      <rect class="lane active" x="144" y="52" width="32" height="40"/><rect class="lane masked" x="180" y="52" width="32" height="40"/>
+      <rect class="lane active" x="216" y="52" width="32" height="40"/><rect class="lane masked" x="252" y="52" width="32" height="40"/>
+      <rect class="lane active" x="288" y="52" width="32" height="40"/><rect class="lane masked" x="324" y="52" width="32" height="40"/>
+      <rect class="lane active" x="360" y="52" width="32" height="40"/><rect class="lane masked" x="396" y="52" width="32" height="40"/>
+      <rect class="lane active" x="432" y="52" width="32" height="40"/><rect class="lane masked" x="468" y="52" width="32" height="40"/>
+      <rect class="lane active" x="504" y="52" width="32" height="40"/><rect class="lane masked" x="540" y="52" width="32" height="40"/>
+    </g>
+    <rect class="maskbox" x="0" y="116" width="530" height="46"/>
+    <text class="body" x="16" y="145">active mask = 10101010101010101010101010101010</text>
+
+    <path class="arrow" d="M286 176 L286 220"/>
+
+    <text class="small" x="0" y="248">second issue: ELSE body</text>
+    <g transform="translate(0,260)">
+      <rect class="lane masked" x="0" y="0" width="32" height="40"/><rect class="lane other" x="36" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="72" y="0" width="32" height="40"/><rect class="lane other" x="108" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="144" y="0" width="32" height="40"/><rect class="lane other" x="180" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="216" y="0" width="32" height="40"/><rect class="lane other" x="252" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="288" y="0" width="32" height="40"/><rect class="lane other" x="324" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="360" y="0" width="32" height="40"/><rect class="lane other" x="396" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="432" y="0" width="32" height="40"/><rect class="lane other" x="468" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="504" y="0" width="32" height="40"/><rect class="lane other" x="540" y="0" width="32" height="40"/>
+      <rect class="lane masked" x="0" y="52" width="32" height="40"/><rect class="lane other" x="36" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="72" y="52" width="32" height="40"/><rect class="lane other" x="108" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="144" y="52" width="32" height="40"/><rect class="lane other" x="180" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="216" y="52" width="32" height="40"/><rect class="lane other" x="252" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="288" y="52" width="32" height="40"/><rect class="lane other" x="324" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="360" y="52" width="32" height="40"/><rect class="lane other" x="396" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="432" y="52" width="32" height="40"/><rect class="lane other" x="468" y="52" width="32" height="40"/>
+      <rect class="lane masked" x="504" y="52" width="32" height="40"/><rect class="lane other" x="540" y="52" width="32" height="40"/>
+    </g>
+    <rect class="maskbox" x="0" y="376" width="530" height="46"/>
+    <text class="body" x="16" y="405">active mask = 01010101010101010101010101010101</text>
+  </g>
+
+  <rect class="note" x="76" y="636" width="1240" height="62"/>
+  <text class="body" x="94" y="660">对照实验表：`uniform_true` 约 `0.282 ms`，</text>
+  <text class="body" x="94" y="682">而 `checkerboard / random_50 / warp_aligned_half` 都接近 `0.54 ms`。</text>
+  <text class="body" x="94" y="704">直觉上就是“一条 warp 指令只养活了约一半线程”，所以 `threads/inst` 从 `32` 掉到约 `16.8`。</text>
+</svg>

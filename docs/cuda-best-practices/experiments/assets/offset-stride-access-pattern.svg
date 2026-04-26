@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">Offset vs Stride: Access Pattern</text>
+<text class="body" x="44" y="78">coalescing 看的是同一拍 warp 里 32 个线程的地址分布，不只是单线程自己是不是连续。</text>
+
+<rect class="panel" x="40" y="110" width="410" height="400"/>
+<text class="label" x="72" y="150">Contiguous</text>
+<text class="small" x="72" y="178">lane0..lane7 访问相邻地址</text>
+<rect class="gpu" x="80" y="240" width="36" height="44"/><rect class="gpu" x="118" y="240" width="36" height="44"/><rect class="gpu" x="156" y="240" width="36" height="44"/><rect class="gpu" x="194" y="240" width="36" height="44"/><rect class="gpu" x="232" y="240" width="36" height="44"/><rect class="gpu" x="270" y="240" width="36" height="44"/><rect class="gpu" x="308" y="240" width="36" height="44"/><rect class="gpu" x="346" y="240" width="36" height="44"/>
+<text class="small" x="140" y="336">一个或少数几个 segment 就能覆盖</text>
+
+<rect class="panel" x="495" y="110" width="410" height="400"/>
+<text class="label" x="527" y="150">Offset</text>
+<text class="small" x="527" y="178">整体平移一格，但 lane 之间仍基本相邻</text>
+<rect x="535" y="240" width="36" height="44" fill="#e5e7eb"/><rect class="warn" x="573" y="240" width="36" height="44"/><rect class="warn" x="611" y="240" width="36" height="44"/><rect class="warn" x="649" y="240" width="36" height="44"/><rect class="warn" x="687" y="240" width="36" height="44"/><rect class="warn" x="725" y="240" width="36" height="44"/><rect class="warn" x="763" y="240" width="36" height="44"/><rect class="warn" x="801" y="240" width="36" height="44"/>
+<text class="small" x="598" y="336">可能多碰到一个额外 segment</text>
+
+<rect class="panel" x="950" y="110" width="410" height="400"/>
+<text class="label" x="982" y="150">Stride</text>
+<text class="small" x="982" y="178">lane 间地址相隔很大</text>
+<rect class="hot" x="990" y="240" width="36" height="44"/><rect x="1028" y="240" width="36" height="44" fill="#e5e7eb"/><rect x="1066" y="240" width="36" height="44" fill="#e5e7eb"/><rect class="hot" x="1104" y="240" width="36" height="44"/><rect x="1142" y="240" width="36" height="44" fill="#e5e7eb"/><rect x="1180" y="240" width="36" height="44" fill="#e5e7eb"/><rect class="hot" x="1218" y="240" width="36" height="44"/><rect x="1256" y="240" width="36" height="44" fill="#e5e7eb"/>
+<text class="small" x="1015" y="336">一次 warp load 被拆成更多离散请求</text>
+
+</svg>

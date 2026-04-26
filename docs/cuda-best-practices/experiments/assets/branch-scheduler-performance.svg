@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="900" viewBox="0 0 1700 900">
+<defs><style>
+.bg { fill: #f8fafc; }
+.panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 20; ry: 20; }
+.title { font: 700 34px "DejaVu Sans", sans-serif; fill: #0f172a; }
+.subtitle { font: 400 19px "DejaVu Sans", sans-serif; fill: #475569; }
+.label { font: 700 20px "DejaVu Sans", sans-serif; fill: #1e293b; }
+.body { font: 400 18px "DejaVu Sans", sans-serif; fill: #334155; }
+.small { font: 400 15px "DejaVu Sans", sans-serif; fill: #64748b; }
+.grid { stroke: #e2e8f0; stroke-width: 1.5; }
+</style></defs>
+<rect class="bg" x="0" y="0" width="1700" height="900" />
+<text class="title" x="56" y="60">Branch / Scheduler 数据图</text>
+<text class="subtitle" x="56" y="94">基于 README 当前记录的 A100 测量值，补一张更直观的对比图。</text>
+<rect class="panel" x="40" y="130" width="500" height="700" />
+<text class="label" x="60" y="164" text-anchor="start">warp_divergence</text>
+<text class="small" x="60" y="190" text-anchor="start">柱越高，说明分歧导致的时间代价越大</text>
+<line class="grid" x1="100" y1="780.0" x2="510" y2="780.0" />
+<text class="small" x="90" y="785.0" text-anchor="end">0.000</text>
+<line class="grid" x1="100" y1="642.5" x2="510" y2="642.5" />
+<text class="small" x="90" y="647.5" text-anchor="end">0.150</text>
+<line class="grid" x1="100" y1="505.0" x2="510" y2="505.0" />
+<text class="small" x="90" y="510.0" text-anchor="end">0.301</text>
+<line class="grid" x1="100" y1="367.5" x2="510" y2="367.5" />
+<text class="small" x="90" y="372.5" text-anchor="end">0.451</text>
+<line class="grid" x1="100" y1="230.0" x2="510" y2="230.0" />
+<text class="small" x="90" y="235.0" text-anchor="end">0.602</text>
+<rect x="114.58" y="522.1335828751901" width="50.839999999999996" height="257.8664171248099" fill="#0f766e" rx="10" ry="10" />
+<text class="small" x="140.0" y="512.1335828751901" text-anchor="middle">0.282</text>
+<text class="small" x="140.0" y="800" text-anchor="middle"><tspan x="140.0" dy="0">uniform</tspan><tspan x="140.0" dy="16">true</tspan></text>
+<rect x="197.08" y="280.0292431863375" width="50.839999999999996" height="499.9707568136625" fill="#dc2626" rx="10" ry="10" />
+<text class="small" x="222.5" y="270.0292431863375" text-anchor="middle">0.547</text>
+<text class="small" x="222.5" y="800" text-anchor="middle"><tspan x="222.5" dy="0">warp_aligned</tspan><tspan x="222.5" dy="16">half</tspan></text>
+<rect x="279.58" y="280.0" width="50.839999999999996" height="500.0" fill="#dc2626" rx="10" ry="10" />
+<text class="small" x="305.0" y="270.0" text-anchor="middle">0.547</text>
+<text class="small" x="305.0" y="800" text-anchor="middle"><tspan x="305.0" dy="0">checkerboard</tspan></text>
+<rect x="362.08" y="285.46847584512807" width="50.839999999999996" height="494.53152415487193" fill="#dc2626" rx="10" ry="10" />
+<text class="small" x="387.5" y="275.46847584512807" text-anchor="middle">0.541</text>
+<text class="small" x="387.5" y="800" text-anchor="middle"><tspan x="387.5" dy="0">random</tspan><tspan x="387.5" dy="16">50</tspan></text>
+<rect x="444.58" y="280.99426833547784" width="50.839999999999996" height="499.00573166452216" fill="#dc2626" rx="10" ry="10" />
+<text class="small" x="470.0" y="270.99426833547784" text-anchor="middle">0.546</text>
+<text class="small" x="470.0" y="800" text-anchor="middle"><tspan x="470.0" dy="0">random</tspan><tspan x="470.0" dy="16">10</tspan></text>
+<text class="body" x="305.0" y="796" text-anchor="middle"><tspan x="305.0" dy="0">uniform_true 对比</tspan><tspan x="305.0" dy="18">不同 lane pattern</tspan></text>
+<rect class="panel" x="570" y="130" width="540" height="700" />
+<text class="label" x="590" y="164" text-anchor="start">branch vs compute_both</text>
+<text class="small" x="590" y="190" text-anchor="start">以 random_50 为主线，展示 body 变长时两者差距</text>
+<line class="grid" x1="634" y1="774.0" x2="1080" y2="774.0" />
+<text class="small" x="624" y="779.0" text-anchor="end">0.000</text>
+<line class="grid" x1="634" y1="639.0" x2="1080" y2="639.0" />
+<text class="small" x="624" y="644.0" text-anchor="end">63.211</text>
+<line class="grid" x1="634" y1="504.0" x2="1080" y2="504.0" />
+<text class="small" x="624" y="509.0" text-anchor="end">126.423</text>
+<line class="grid" x1="634" y1="369.0" x2="1080" y2="369.0" />
+<text class="small" x="624" y="374.0" text-anchor="end">189.634</text>
+<line class="grid" x1="634" y1="234.0" x2="1080" y2="234.0" />
+<text class="small" x="624" y="239.0" text-anchor="end">252.846</text>
+<circle cx="654.0" cy="758.8864275687072" r="5" fill="#2563eb" />
+<text class="small" x="654.0" y="748.8864275687072" text-anchor="middle">7.077</text>
+<circle cx="735.2" cy="754.1730809566546" r="5" fill="#2563eb" />
+<text class="small" x="735.2" y="744.1730809566546" text-anchor="middle">9.284</text>
+<circle cx="816.4" cy="741.0717036954964" r="5" fill="#2563eb" />
+<text class="small" x="816.4" y="731.0717036954964" text-anchor="middle">15.418</text>
+<circle cx="897.6" cy="711.5617425097266" r="5" fill="#2563eb" />
+<text class="small" x="897.6" y="701.5617425097266" text-anchor="middle">29.236</text>
+<circle cx="978.8" cy="651.4343349765825" r="5" fill="#2563eb" />
+<text class="small" x="978.8" y="641.4343349765825" text-anchor="middle">57.389</text>
+<circle cx="1060.0" cy="530.7926974633201" r="5" fill="#2563eb" />
+<text class="small" x="1060.0" y="520.7926974633201" text-anchor="middle">113.878</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="3.5" points="654.0,758.8864275687072 735.2,754.1730809566546 816.4,741.0717036954964 897.6,711.5617425097266 978.8,651.4343349765825 1060.0,530.7926974633201" />
+<circle cx="654.0" cy="755.037129577244" r="5" fill="#d97706" />
+<text class="small" x="654.0" y="745.037129577244" text-anchor="middle">8.879</text>
+<circle cx="735.2" cy="740.6695106928729" r="5" fill="#d97706" />
+<text class="small" x="735.2" y="730.6695106928729" text-anchor="middle">15.606</text>
+<circle cx="816.4" cy="710.1335964189275" r="5" fill="#d97706" />
+<text class="small" x="816.4" y="700.1335964189275" text-anchor="middle">29.904</text>
+<circle cx="897.6" cy="648.067730523256" r="5" fill="#d97706" />
+<text class="small" x="897.6" y="638.067730523256" text-anchor="middle">58.966</text>
+<circle cx="978.8" cy="523.4497514068373" r="5" fill="#d97706" />
+<text class="small" x="978.8" y="513.4497514068373" text-anchor="middle">117.316</text>
+<circle cx="1060.0" cy="274.00000000000006" r="5" fill="#d97706" />
+<text class="small" x="1060.0" y="264.00000000000006" text-anchor="middle">234.116</text>
+<polyline fill="none" stroke="#d97706" stroke-width="3.5" points="654.0,755.037129577244 735.2,740.6695106928729 816.4,710.1335964189275 897.6,648.067730523256 978.8,523.4497514068373 1060.0,274.00000000000006" />
+<text class="small" x="654.0" y="798" text-anchor="middle">1</text>
+<text class="small" x="735.2" y="798" text-anchor="middle">2</text>
+<text class="small" x="816.4" y="798" text-anchor="middle">4</text>
+<text class="small" x="897.6" y="798" text-anchor="middle">8</text>
+<text class="small" x="978.8" y="798" text-anchor="middle">16</text>
+<text class="small" x="1060.0" y="798" text-anchor="middle">32</text>
+<rect x="900" y="242" width="14" height="14" fill="#2563eb" rx="3" ry="3" />
+<text class="small" x="922" y="254" text-anchor="start">branch</text>
+<rect x="900" y="268" width="14" height="14" fill="#d97706" rx="3" ry="3" />
+<text class="small" x="922" y="280" text-anchor="start">compute_both</text>
+<text class="body" x="857.0" y="812" text-anchor="middle">body_ops</text>
+<rect class="panel" x="1140" y="130" width="520" height="700" />
+<text class="label" x="1160" y="164" text-anchor="start">scheduler_latency_hiding</text>
+<text class="small" x="1160" y="190" text-anchor="start">对比 dep_chain 和 ilp4 在 occupancy 下降时的变化</text>
+<line class="grid" x1="1204" y1="774.0" x2="1630" y2="774.0" />
+<text class="small" x="1194" y="779.0" text-anchor="end">0.000</text>
+<line class="grid" x1="1204" y1="639.0" x2="1630" y2="639.0" />
+<text class="small" x="1194" y="644.0" text-anchor="end">0.311</text>
+<line class="grid" x1="1204" y1="504.0" x2="1630" y2="504.0" />
+<text class="small" x="1194" y="509.0" text-anchor="end">0.621</text>
+<line class="grid" x1="1204" y1="369.0" x2="1630" y2="369.0" />
+<text class="small" x="1194" y="374.0" text-anchor="end">0.932</text>
+<line class="grid" x1="1204" y1="234.0" x2="1630" y2="234.0" />
+<text class="small" x="1194" y="239.0" text-anchor="end">1.243</text>
+<circle cx="1224.0" cy="340.92590170013546" r="5" fill="#dc2626" />
+<text class="small" x="1224.0" y="330.92590170013546" text-anchor="middle">0.997</text>
+<circle cx="1417.0" cy="340.9815256410917" r="5" fill="#dc2626" />
+<text class="small" x="1417.0" y="330.9815256410917" text-anchor="middle">0.996</text>
+<circle cx="1610.0" cy="283.0909090909092" r="5" fill="#dc2626" />
+<text class="small" x="1610.0" y="273.0909090909092" text-anchor="middle">1.130</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="3.5" points="1224.0,340.92590170013546 1417.0,340.9815256410917 1610.0,283.0909090909092" />
+<circle cx="1224.0" cy="560.1259470233466" r="5" fill="#0f766e" />
+<text class="small" x="1224.0" y="550.1259470233466" text-anchor="middle">0.492</text>
+<circle cx="1417.0" cy="560.0425111119123" r="5" fill="#0f766e" />
+<text class="small" x="1417.0" y="550.0425111119123" text-anchor="middle">0.492</text>
+<circle cx="1610.0" cy="543.7725083822189" r="5" fill="#0f766e" />
+<text class="small" x="1610.0" y="533.7725083822189" text-anchor="middle">0.530</text>
+<polyline fill="none" stroke="#0f766e" stroke-width="3.5" points="1224.0,560.1259470233466 1417.0,560.0425111119123 1610.0,543.7725083822189" />
+<text class="small" x="1224.0" y="794" text-anchor="middle"><tspan x="1224.0" dy="0">0KB</tspan><tspan x="1224.0" dy="16">occ=1.0</tspan></text>
+<text class="small" x="1417.0" y="794" text-anchor="middle"><tspan x="1417.0" dy="0">8KB</tspan><tspan x="1417.0" dy="16">occ=1.0</tspan></text>
+<text class="small" x="1610.0" y="794" text-anchor="middle"><tspan x="1610.0" dy="0">32KB</tspan><tspan x="1610.0" dy="16">occ=0.5</tspan></text>
+<rect x="1450" y="242" width="14" height="14" fill="#dc2626" rx="3" ry="3" />
+<text class="small" x="1472" y="254" text-anchor="start">dep_chain</text>
+<rect x="1450" y="268" width="14" height="14" fill="#0f766e" rx="3" ry="3" />
+<text class="small" x="1472" y="280" text-anchor="start">ilp4</text>
+<text class="body" x="1417.0" y="796" text-anchor="middle"><tspan x="1417.0" dy="0">extra shared memory</tspan><tspan x="1417.0" dy="18">/ occupancy</tspan></text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620">
+<defs>
+  <style>
+    .bg{fill:#f8fafc;}
+    .panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+    .title{font:700 30px "DejaVu Sans",sans-serif;fill:#0f172a;}
+    .label{font:700 20px "DejaVu Sans",sans-serif;fill:#1e293b;}
+    .body{font:400 15px "DejaVu Sans",sans-serif;fill:#334155;}
+    .small{font:400 13px "DejaVu Sans",sans-serif;fill:#64748b;}
+    .line{stroke:#94a3b8;stroke-width:2;}
+    .dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+    .arrow{stroke:#0f172a;stroke-width:2.5;fill:none;marker-end:url(#arrow);}
+    .gpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+    .cpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+    .hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+    .warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+    .accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+  </style>
+  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/>
+  </marker>
+</defs>
+<rect class="bg" x="0" y="0" width="1600" height="620"/>
+<text class="title" x="42" y="48">Branch / Scheduler Principles</text>
+<text class="body" x="42" y="78">用一张图替代文档末尾的大段说明: GPU divergence, CPU prediction, and ILP solve different problems.</text>
+
+<rect class="panel" x="32" y="110" width="490" height="470"/>
+<text class="label" x="60" y="148">GPU SIMT divergence</text>
+<text class="small" x="60" y="176">warp issue = one instruction + one active mask</text>
+<text class="body" x="60" y="224">warp</text>
+<rect class="gpu" x="118" y="198" width="24" height="34" rx="6" ry="6"/><rect class="gpu" x="148" y="198" width="24" height="34" rx="6" ry="6"/><rect class="gpu" x="178" y="198" width="24" height="34" rx="6" ry="6"/><rect class="gpu" x="208" y="198" width="24" height="34" rx="6" ry="6"/><rect class="hot" x="238" y="198" width="24" height="34" rx="6" ry="6"/><rect class="hot" x="268" y="198" width="24" height="34" rx="6" ry="6"/><rect class="hot" x="298" y="198" width="24" height="34" rx="6" ry="6"/><rect class="hot" x="328" y="198" width="24" height="34" rx="6" ry="6"/>
+<text class="small" x="120" y="254">true lanes</text>
+<text class="small" x="244" y="254">false lanes</text>
+<line class="arrow" x1="236" y1="284" x2="180" y2="340"/>
+<line class="arrow" x1="254" y1="284" x2="320" y2="340"/>
+<rect class="gpu" x="78" y="344" width="180" height="56" rx="12" ry="12"/>
+<text class="body" x="122" y="378">issue path A</text>
+<rect class="hot" x="264" y="344" width="180" height="56" rx="12" ry="12"/>
+<text class="body" x="308" y="378">issue path B</text>
+<line class="dash" x1="168" y1="400" x2="168" y2="470"/>
+<line class="dash" x1="354" y1="400" x2="354" y2="470"/>
+<text class="small" x="62" y="508">Volta+ independent thread scheduling does not make this MIMD.</text>
+<text class="small" x="62" y="532">If true/false coexist in one warp, both paths still need separate issue slots.</text>
+
+<rect class="panel" x="556" y="110" width="490" height="470"/>
+<text class="label" x="584" y="148">CPU branch prediction</text>
+<text class="small" x="584" y="176">front-end speculation guesses next PC and direction</text>
+<line class="line" x1="612" y1="238" x2="972" y2="238"/>
+<rect class="cpu" x="636" y="210" width="120" height="56" rx="12" ry="12"/>
+<text class="body" x="668" y="244">predict</text>
+<rect class="cpu" x="786" y="210" width="120" height="56" rx="12" ry="12"/>
+<text class="body" x="830" y="244">execute</text>
+<line class="arrow" x1="756" y1="238" x2="786" y2="238"/>
+<rect class="warn" x="636" y="332" width="120" height="56" rx="12" ry="12"/>
+<text class="body" x="662" y="366">mispredict</text>
+<rect class="hot" x="786" y="332" width="140" height="56" rx="12" ry="12"/>
+<text class="body" x="820" y="366">flush / replay</text>
+<line class="arrow" x1="756" y1="360" x2="786" y2="360"/>
+<text class="small" x="584" y="438">CPU cost comes mainly from guessing wrong and paying pipeline flush.</text>
+<text class="small" x="584" y="462">This is different from GPU warp divergence: prediction is about control-flow guess,</text>
+<text class="small" x="584" y="486">not about issuing two active masks for one warp.</text>
+
+<rect class="panel" x="1080" y="110" width="490" height="470"/>
+<text class="label" x="1108" y="148">ILP: dep_chain vs ilp4</text>
+<text class="small" x="1108" y="176">same warp, same SIMT width, different dependency structure</text>
+<text class="body" x="1108" y="226">dep_chain</text>
+<rect class="hot" x="1200" y="198" width="74" height="34" rx="8" ry="8"/><rect class="hot" x="1292" y="198" width="74" height="34" rx="8" ry="8"/><rect class="hot" x="1384" y="198" width="74" height="34" rx="8" ry="8"/><rect class="hot" x="1476" y="198" width="74" height="34" rx="8" ry="8"/>
+<line class="arrow" x1="1274" y1="215" x2="1292" y2="215"/><line class="arrow" x1="1366" y1="215" x2="1384" y2="215"/><line class="arrow" x1="1458" y1="215" x2="1476" y2="215"/>
+<text class="small" x="1198" y="260">x0 -> x0 -> x0 -> x0</text>
+<text class="body" x="1108" y="336">ilp4</text>
+<rect class="accent" x="1200" y="308" width="74" height="34" rx="8" ry="8"/><rect class="accent" x="1292" y="308" width="74" height="34" rx="8" ry="8"/><rect class="accent" x="1384" y="308" width="74" height="34" rx="8" ry="8"/><rect class="accent" x="1476" y="308" width="74" height="34" rx="8" ry="8"/>
+<text class="small" x="1192" y="370">x0     x1     x2     x3</text>
+<text class="small" x="1108" y="438">More ILP means more ready instructions inside the same warp.</text>
+<text class="small" x="1108" y="462">When occupancy drops and there are fewer other warps to switch to,</text>
+<text class="small" x="1108" y="486">this per-warp independence matters more.</text>
+</svg>

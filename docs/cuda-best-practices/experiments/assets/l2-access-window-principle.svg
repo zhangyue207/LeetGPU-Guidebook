@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+<defs><style>
+.bg{fill:#f8fafc;}
+.panel{fill:#ffffff;stroke:#cbd5e1;stroke-width:2;rx:18;ry:18;}
+.title{font:700 28px "DejaVu Sans", sans-serif;fill:#0f172a;}
+.label{font:700 18px "DejaVu Sans", sans-serif;fill:#1e293b;}
+.body{font:400 15px "DejaVu Sans", sans-serif;fill:#334155;}
+.small{font:400 13px "DejaVu Sans", sans-serif;fill:#64748b;}
+.cpu{fill:#dbeafe;stroke:#2563eb;stroke-width:2;}
+.gpu{fill:#dcfce7;stroke:#16a34a;stroke-width:2;}
+.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2;}
+.hot{fill:#fee2e2;stroke:#dc2626;stroke-width:2;}
+.accent{fill:#ede9fe;stroke:#7c3aed;stroke-width:2;}
+.line{stroke:#94a3b8;stroke-width:2;}
+.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:7 6;}
+.arrow{stroke:#0f172a;stroke-width:2.5;marker-end:url(#arrow);fill:none;}
+.grid{stroke:#e2e8f0;stroke-width:1.5;}
+</style>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#0f172a"/></marker></defs>
+<rect class="bg" x="0" y="0" width="1400" height="560"/>
+
+<text class="title" x="44" y="48">L2 Access Window: Sliding Window over Set-Aside L2</text>
+<text class="body" x="44" y="78">按 Best Practices Guide 的 sliding-window 图重画：频繁访问的数据窗口映射到 set-aside L2；窗口超过可保留容量时，固定 hitRatio 会开始 thrash。</text>
+
+<rect class="panel" x="40" y="110" width="620" height="400"/>
+<text class="label" x="72" y="150">Fixed hitRatio = 1.0</text>
+<rect x="84" y="214" width="530" height="46" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+<rect x="110" y="214" width="330" height="46" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+<text class="body" x="250" y="204">freq window in global memory</text>
+<text class="small" x="118" y="244">persistent region</text>
+<rect x="84" y="332" width="530" height="46" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+<rect x="146" y="332" width="220" height="46" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+<text class="body" x="260" y="322">set-aside L2</text>
+<line class="arrow" x1="270" y1="260" x2="270" y2="332"/>
+<line class="arrow" x1="406" y1="260" x2="366" y2="332"/>
+<text class="small" x="90" y="414">窗口大于 set-aside 时，整段都想“持久化”，最终在保留区里互相驱逐。</text>
+
+<rect class="panel" x="700" y="110" width="660" height="400"/>
+<text class="label" x="732" y="150">Tuned hitRatio</text>
+<rect x="744" y="214" width="572" height="46" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+<rect x="790" y="214" width="360" height="46" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+<text class="body" x="932" y="204">same freq window</text>
+<rect x="744" y="332" width="572" height="46" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+<rect x="872" y="332" width="188" height="46" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+<text class="body" x="958" y="322">set-aside L2</text>
+<line class="arrow" x1="872" y1="260" x2="872" y2="332"/>
+<line class="arrow" x1="1060" y1="260" x2="1060" y2="332"/>
+<text class="small" x="782" y="414">把真正想保留的热数据规模固定在可承受范围，其余访问仍按 streaming 处理，所以大窗口时更稳。</text>
+
+</svg>
