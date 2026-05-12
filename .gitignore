@@ -1,0 +1,5 @@
+practice/build/
+*.o
+*.out
+*.log
+
