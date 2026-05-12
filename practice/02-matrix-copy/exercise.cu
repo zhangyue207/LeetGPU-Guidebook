@@ -5,14 +5,13 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void matrix_copy_kernel(const float *in, float *out, int rows, int cols) {
   const int col = blockIdx.x * blockDim.x + threadIdx.x;
   const int row = blockIdx.y * blockDim.y + threadIdx.y;
   if (row < rows && col < cols) {
     // TODO(student): copy in[row * cols + col] to out[row * cols + col].
-    out[row * cols + col] = in[row * cols + col];
   }
 }
 
@@ -57,4 +56,3 @@ int main() {
   std::cout << "kernel_ms: " << kernel_ms << "\n";
   return 0;
 }
-

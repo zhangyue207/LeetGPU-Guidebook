@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void sum_blocks_kernel(const float *x, float *partial_sums, int n) {
   extern __shared__ float shared[];
@@ -15,19 +15,9 @@ __global__ void sum_blocks_kernel(const float *x, float *partial_sums, int n) {
   (void)i;
 
   // TODO(student): load x[i] into shared[tid] when i < n, otherwise 0.
-  shared[tid] = i < n ? x[i] : 0;
-  __syncthreads();
-
   // TODO(student): reduce shared[] so thread 0 writes the block sum to partial_sums[blockIdx.x].
-  for (int s = blockDim.x / 2; s > 0; s >>= 1) {
-    if (tid < s) {
-      shared[tid] += shared[tid + s];
-    }
-    __syncthreads();
-  }
-  
   if (tid == 0) {
-    partial_sums[blockIdx.x] = shared[0];
+    partial_sums[blockIdx.x] = 0.0f;
   }
 }
 

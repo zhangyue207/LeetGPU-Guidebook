@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void rope_kernel(const float *x,
                             const float *cos_table,
@@ -21,15 +21,7 @@ __global__ void rope_kernel(const float *x,
 
   if (pair_index < total_pairs) {
     // TODO(student): decode pair_index into token, head, and pair_col.
-    int token_index = pair_index / pair_dim / heads;
-    int head_index = pair_index / pair_dim % heads;
-    int pair_col = pair_index % pair_dim;
     // TODO(student): rotate the even/odd values and write both outputs.
-    int even_index = token_index * heads * head_dim + head_index * head_dim + pair_col * 2;
-    int odd_index = token_index * heads * head_dim + head_index * head_dim + pair_col * 2 + 1;
-    int table_index = token_index * pair_dim + pair_col;
-    y[even_index] = x[even_index] * cos_table[table_index] - x[odd_index] * sin_table[table_index];
-    y[odd_index] = x[even_index] * sin_table[table_index] + x[odd_index] * cos_table[table_index];
   }
 }
 

@@ -6,12 +6,12 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void vector_add_kernel(const float *a, const float *b, float *c, int n) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < n) {
-    c[i] = a[i] + b[i];
+    // TODO(student): write c[i] = a[i] + b[i].
   }
 }
 
@@ -60,4 +60,3 @@ int main() {
   std::cout << "kernel_ms: " << kernel_ms << "\n";
   return 0;
 }
-
