@@ -5,13 +5,13 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void matrix_transpose_kernel(const float *in, float *out, int rows, int cols) {
   const int col = blockIdx.x * blockDim.x + threadIdx.x;
   const int row = blockIdx.y * blockDim.y + threadIdx.y;
   if (row < rows && col < cols) {
-    out[col * rows + row] = in[row * cols + col];
+    // TODO(student): write out[col * rows + row] = in[row * cols + col].
   }
 }
 
@@ -65,4 +65,3 @@ int main() {
   std::cout << "kernel_ms: " << kernel_ms << "\n";
   return 0;
 }
-

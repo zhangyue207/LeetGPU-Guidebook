@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void softmax_rows_kernel(const float *x, float *y, int rows, int cols) {
   extern __shared__ float shared[];
@@ -15,36 +15,12 @@ __global__ void softmax_rows_kernel(const float *x, float *y, int rows, int cols
   const int col = threadIdx.x;
   const bool valid = row < rows && col < cols;
 
-  shared[col] = valid ? x[row * cols + col] : -INFINITY;
-  __syncthreads();
-
-  for(int s = blockDim.x / 2; s > 0; s >>= 1) {
-    if (threadIdx.x < s) {
-      shared[col] = max(shared[col], shared[col + s]);
-    }
-    __syncthreads();
-  }
-
-  __shared__ float max_val;
-  if (threadIdx.x == 0) {
-    max_val = shared[0];
-  }
-  __syncthreads();
-
-  float val = valid ? exp(x[row * cols + col] - max_val) : 0;
-
-  shared[col] = val;
-  __syncthreads();
-
-  for(int s = blockDim.x/ 2; s > 0; s >>= 1) {
-    if (threadIdx.x < s) {
-      shared[col] += shared[col + s];
-    }
-    __syncthreads();
-  }
-
+  // TODO(student): use shared[] to reduce each row to its maximum value.
+  // TODO(student): compute expf(x - max) and reduce those values to the row sum.
+  // TODO(student): write y[row * cols + col] = exp_value / row_sum for valid elements.
+  (void)shared;
   if (valid) {
-    y[row * cols + col] = val / shared[0];
+    y[row * cols + col] = 0.0f;
   }
 }
 
@@ -112,4 +88,3 @@ int main() {
   std::cout << "kernel_ms: " << kernel_ms << "\n";
   return 0;
 }
-

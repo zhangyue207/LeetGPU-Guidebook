@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void rmsnorm_rows_kernel(const float *x,
                                     const float *weight,
@@ -20,23 +20,12 @@ __global__ void rmsnorm_rows_kernel(const float *x,
   const int col = threadIdx.x;
 
   // TODO(student): load x[row * cols + col]^2 into shared[col] when col < cols, otherwise 0.
-  shared[col] = col < cols ? x[row * cols + col] * x[row * cols + col] : 0;
-  __syncthreads();
-  
-  // TODO(student): reduce shared[] to get the row sum of squares
-  for (int s = blockDim.x / 2; s > 0; s >>= 1) {
-    if (col < s) {
-      shared[col] += shared[col + s];
-    }
-    __syncthreads();
-  }
-
+  // TODO(student): reduce shared[] to get the row sum of squares.
   // TODO(student): compute inv_rms = rsqrtf(sum_squares / cols + eps).
-  float inv_rms = rsqrtf(shared[0] / cols + eps);
-  
   // TODO(student): write y[row * cols + col] = x[...] * inv_rms * weight[col] when col < cols.
+  (void)shared;
   if (row < rows && col < cols) {
-    y[row * cols + col] = x[row * cols + col] * inv_rms * weight[col];
+    y[row * cols + col] = 0.0f;
   }
 }
 

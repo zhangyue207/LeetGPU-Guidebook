@@ -6,13 +6,13 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void gelu_kernel(const float *x, float *y, int n) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < n) {
     // TODO(student): implement the tanh-approximation GELU formula for x[i].
-    y[i] = 0.5f * x[i] * (1 + tanhf(sqrtf(2 / 3.1415926f) * (x[i] + 0.044715f * x[i] * x[i] * x[i])));
+    y[i] = 0.0f;
   }
 }
 
