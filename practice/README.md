@@ -52,5 +52,10 @@ cmake --build practice/build -j
 8. `08-rope`: rotary positional embedding indexing.
 9. `09-optimized-reduction`: grid-stride accumulation plus block reduction.
 10. `10-tiled-transpose`: shared-memory tiled transpose.
+11. `11-saxpy`: fused elementwise multiply-add.
+12. `12-layernorm`: row-wise normalization with mean and variance.
+13. `13-vector-dot`: dot product with partial sums.
+14. `14-histogram`: atomic updates into integer bins.
+15. `15-embedding-lookup`: gather rows from an embedding table.
 
 Each exercise has a CPU reference, GPU output check, and `cudaEvent` kernel timing.
