@@ -57,5 +57,10 @@ cmake --build practice/build -j
 13. `13-vector-dot`: dot product with partial sums.
 14. `14-histogram`: atomic updates into integer bins.
 15. `15-embedding-lookup`: gather rows from an embedding table.
+16. `16-prefix-sum`: one-block inclusive scan.
+17. `17-matrix-vector`: row-wise matrix-vector multiplication.
+18. `18-tiled-matmul`: shared-memory tiled matrix multiplication.
+19. `19-conv2d`: single-channel 3x3 convolution.
+20. `20-max-pooling`: 2x2 max pooling with stride 2.
 
 Each exercise has a CPU reference, GPU output check, and `cudaEvent` kernel timing.

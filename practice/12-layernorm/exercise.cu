@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = false;
+constexpr bool kStudentKernelImplemented = true;
 
 __global__ void layernorm_rows_kernel(const float *x,
                                       const float *gamma,
@@ -20,11 +20,29 @@ __global__ void layernorm_rows_kernel(const float *x,
   const int col = threadIdx.x;
 
   // TODO(student): reduce x[row, :] to compute the row mean.
+  shared[col] = col < cols ? x[row * cols + col]: 0;
+  __syncthreads();
+  for (int s = blockDim.x / 2; s > 0; s >>= 1) {
+    if (col < s) {
+      shared[col] += shared[col + s]; 
+    }
+    __syncthreads();
+  }
+  float mean_ = shared[0] / cols;
   // TODO(student): reduce squared deviations to compute variance.
+  shared[col] = col < cols ? (x[row * cols + col] - mean_)* (x[row * cols + col] - mean_) : 0;
+  __syncthreads();
+  for (int s = blockDim.x / 2; s > 0; s >>= 1) {
+    if (col < s) {
+      shared[col] += shared[col + s]; 
+    }
+    __syncthreads();
+  }
+  float var_ = shared[0] / cols;
   // TODO(student): write normalized output with gamma[col] and beta[col].
   (void)shared;
   if (row < rows && col < cols) {
-    y[row * cols + col] = 0.0f;
+    y[row * cols + col] = (x[row * cols + col] - mean_) * rsqrtf(var_ + eps) * gamma[col] + beta[col];
   }
 }
 

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = false;
+constexpr bool kStudentKernelImplemented = true;
 
 __global__ void dot_blocks_kernel(const float *a, const float *b, float *partial_sums, int n) {
   extern __shared__ float shared[];
@@ -17,9 +17,22 @@ __global__ void dot_blocks_kernel(const float *a, const float *b, float *partial
   (void)stride;
 
   // TODO(student): accumulate a[i] * b[i] with a grid-stride loop.
+  float sum = 0;
+  for (int i = global_tid; i < n; i += stride) {
+    sum += a[i] * b[i];
+  }
   // TODO(student): reduce one local sum per thread in shared memory.
+  shared[tid] = sum;
+  __syncthreads();
+  for (int s = blockDim.x; s > 0; s >>= 1 ) {
+    if (tid < s) {
+      shared[tid] += shared[tid + s];
+    }
+    __syncthreads();
+  }
+
   if (tid == 0) {
-    partial_sums[blockIdx.x] = 0.0f;
+    partial_sums[blockIdx.x] = shared[0];
   }
 }
 
