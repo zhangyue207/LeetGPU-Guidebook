@@ -17,14 +17,8 @@ __global__ void tiled_matmul_kernel(const float *a, const float *b, float *c, in
   const int col = blockIdx.x * kTileDim + threadIdx.x;
 
   // TODO(student): loop over K dimension tiles.
-  for (int j = 0; j < (k + kTileDim - 1) / kTileDim; j++) {
-    // TODO(student): load A and B tiles into shared memory with boundary checks.
-    tile_a[threadIdx.y][threadIdx.x] = a[row * k + j * kTileDim + threadIdx.x];
-    tile_b[threadIdx.y][threadIdx.x] = b[(j * kTileDim + threadIdx.y) * n + ];
-    __syncthreads();
-    // TODO(student): accumulate tile products and write c[row * n + col] when valid.
-    
-  }
+  // TODO(student): load A and B tiles into shared memory with boundary checks.
+  // TODO(student): accumulate tile products and write c[row * n + col] when valid.
   (void)row;
   (void)col;
 }

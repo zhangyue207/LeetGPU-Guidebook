@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void matrix_vector_kernel(const float *matrix, const float *x, float *y, int rows, int cols) {
   extern __shared__ float shared[];
@@ -14,18 +14,7 @@ __global__ void matrix_vector_kernel(const float *matrix, const float *x, float 
   const int col = threadIdx.x;
 
   // TODO(student): load matrix[row * cols + col] * x[col] into shared[col] when valid.
-  shared[col] = row < gridDim.x && col < blockDim.x ? matrix[row * cols + col] * x[col] : 0;
-  __syncthreads();
   // TODO(student): reduce shared[] so thread 0 writes y[row].
-  for (int s = blockDim.x / 2; s > 0; s >>= 1) {
-    if (threadIdx.x < s) {
-      shared[col] += shared[col + s];
-    }
-    __syncthreads();
-  }
-  if (threadIdx.x == 0) {
-    y[blockIdx.x] = shared[0];
-  }
   (void)shared;
   (void)row;
   (void)col;

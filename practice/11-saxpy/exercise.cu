@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 
 __global__ void saxpy_kernel(float alpha, const float *x, float *y, int n) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;

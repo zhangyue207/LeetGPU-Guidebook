@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = true;
+constexpr bool kStudentKernelImplemented = false;
 constexpr int kTileDim = 32;
 constexpr int kBlockRows = 8;
 
@@ -22,11 +22,6 @@ __global__ void tiled_transpose_kernel(const float *in, float *out, int rows, in
   (void)x;
   (void)y;
 
-  for (int j = 0; j < kTileDim; j += kBlockRows) {
-    if (y + j < rows && x < cols) {
-      tile[threadIdx.y + j][threadIdx.x] = in[(y + j) * cols + x];
-    }
-  }
   __syncthreads();
 
   const int transposed_x = blockIdx.y * kTileDim + threadIdx.x;
@@ -36,13 +31,6 @@ __global__ void tiled_transpose_kernel(const float *in, float *out, int rows, in
   // Remember that output shape is cols x rows, so the output stride is rows.
   (void)transposed_x;
   (void)transposed_y;
-
-  for (int j = 0; j < kTileDim; j += kBlockRows) {
-    if (transposed_x < rows && transposed_y + j < cols) {
-      out[(transposed_y + j) * rows + transposed_x] = tile[threadIdx.x][threadIdx.y + j];
-    }
-  }
-
 }
 #pragma nv_diag_default 550
 #pragma nv_diag_default 177
