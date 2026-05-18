@@ -5,13 +5,16 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = false;
+constexpr bool kStudentKernelImplemented = true;
 
 __global__ void histogram_kernel(const int *values, int *histogram, int n, int num_bins) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < n) {
     // TODO(student): read values[i] and atomicAdd one count into histogram[bin].
     (void)num_bins;
+    if (values[i] < num_bins) {
+      atomicAdd(&histogram[values[i]], 1);
+    }
   }
 }
 

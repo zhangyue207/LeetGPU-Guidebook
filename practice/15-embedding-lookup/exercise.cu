@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = false;
+constexpr bool kStudentKernelImplemented = true;
 
 __global__ void embedding_lookup_kernel(const float *table,
                                         const int *token_ids,
@@ -17,7 +17,10 @@ __global__ void embedding_lookup_kernel(const float *table,
 
   if (i < total) {
     // TODO(student): decode i into token and dim.
+    int token = i / embedding_dim;
+    int dim = i % embedding_dim;
     // TODO(student): copy table[token_ids[token] * embedding_dim + dim] to output[i].
+    output[token * embedding_dim + dim] = table[token_ids[token] * embedding_dim + dim];
   }
 }
 

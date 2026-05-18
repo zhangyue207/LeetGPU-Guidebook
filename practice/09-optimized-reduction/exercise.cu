@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-constexpr bool kStudentKernelImplemented = false;
+constexpr bool kStudentKernelImplemented = true;
 
 __global__ void optimized_sum_blocks_kernel(const float *x, float *partial_sums, int n) {
   extern __shared__ float shared[];
@@ -17,10 +17,22 @@ __global__ void optimized_sum_blocks_kernel(const float *x, float *partial_sums,
   (void)stride;
 
   // TODO(student): use a grid-stride loop to accumulate multiple x[i] values into a local sum.
+  float ss = 0.f;
+  for (int i = global_tid; i < n; i += blockDim.x * gridDim.x) {
+    ss += x[i];
+  }
   // TODO(student): store the local sum in shared[tid].
+  shared[tid] = ss;
+  __syncthreads();
   // TODO(student): reduce shared[] so thread 0 writes partial_sums[blockIdx.x].
+  for (int s = blockDim.x / 2; s > 0; s >>=1 ){
+    if (tid < s) {
+      shared[tid] += shared[tid + s];
+    }
+    __syncthreads();
+  }
   if (tid == 0) {
-    partial_sums[blockIdx.x] = 0.0f;
+    partial_sums[blockIdx.x] = shared[0];
   }
 }
 
